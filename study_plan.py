@@ -7,8 +7,6 @@ def greet_user():
     name = input("What is your name? ")
     print(f"Nice to meet you, {name} Let's get organized.")
 
-if __name__ == "__main__":
-    greet_user()
 
 # List of dictionaries to store information about tasks
 
@@ -78,9 +76,63 @@ def display_task(tasks):
         print(f"Task {i+1} [{status}] {task['task']} ({task['subject']}) - Due: {task['due_date']} - Priority: {task['priority']}")
 
 
-if __name__ == "__main__":
-    task = []
-    greet_user()
-    add_task(tasks)
-    display_task(tasks)
 
+
+def mark_task_complete(tasks):
+  """Marks a task as complete."""
+
+  display_task(tasks)  # Show tasks with their numbers
+
+  while True:
+    try:
+      task_number = int(input("Enter the number of the task to mark complete: ")) - 1
+      if 0 <= task_number < len(tasks):
+        tasks[task_number]["completed"] = True
+        print("Task marked as complete!")
+        break
+      else:
+        print("Invalid task number. Please try again.")
+    except ValueError:
+      print("Invalid input. Please enter a number.")
+
+
+
+def sort_tasks(tasks):
+  """Sorts tasks by due date and then by priority."""
+
+  tasks.sort(key=lambda task: (task["due_date"], task["priority"]))
+  print("Tasks sorted!")
+
+
+def main():
+  """Main function to run the study planner."""
+
+  tasks = []
+  greet_user()
+
+  while True:
+    print("\nChoose an action:")
+    print("1. Add task")
+    print("2. Display tasks")
+    print("3. Mark task complete")
+    print("4. Sort tasks")
+    print("5. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+      add_task(tasks)
+    elif choice == '2':
+      display_tasks(tasks)
+    elif choice == '3':
+      mark_task_complete(tasks)
+    elif choice == '4':
+      sort_tasks(tasks)
+    elif choice == '5':
+      print("Exiting Study Buddy. Goodbye!")
+      break
+    else:
+      print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+  main()
