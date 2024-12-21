@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 
 
 def greet_user():
@@ -16,14 +16,14 @@ tasks = [
     {
         "task": "Finish chapter 3 reading",
         "subject": "History",
-        "due_date": datetime.date(2024, 12, 28),
+        "due_date": date(2024, 12, 28),
         "priority": 2,
         "completed": False
     },
     {
         "task": "Work on coding assignment",
         "subject": "Coding",
-        "due_date": datetime.date(2024, 12, 26),
+        "due_date": date(2024, 12, 26),
         "priority": 1,
         "completed": False
     }
@@ -40,7 +40,7 @@ def add_task(tasks):
             year = int(input("Enter due date year (YYYY): "))
             month = int(input("Enter due date month (MM): "))
             day = int(input("Enter due date day(DD): "))
-            due_date = datetime.date(year, month, day)
+            due_date = date(year, month, day)
             break
         except ValueError:
             print("Invalid date format. Please try again.")
@@ -55,7 +55,7 @@ def add_task(tasks):
                 print("Priority must be between 1 and 3. Please try again.")
         except ValueError:
             print("Invalid priority. Please enter an integer.")
-    task.append({
+    tasks.append({
         "task": task,
         "subject": subject,
         "due_date": due_date,
@@ -63,3 +63,24 @@ def add_task(tasks):
         "completed": False
     })
     print("Task added successfully.")
+
+
+def display_task(tasks):
+    """ Displays all the tasks in the tasks list in a formatted way"""
+
+    if not tasks:
+        print("No tasks added! Add some tasks to get started.")
+        return
+
+    for i, task in enumerate(tasks):
+        status = "√" if task["completed"] else "✗"
+        print(f"Task {i+1}: {task['task']} {status}")
+        print(f"Task {i+1} [{status}] {task['task']} ({task['subject']}) - Due: {task['due_date']} - Priority: {task['priority']}")
+
+
+if __name__ == "__main__":
+    task = []
+    greet_user()
+    add_task(tasks)
+    display_task(tasks)
+
